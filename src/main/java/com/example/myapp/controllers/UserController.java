@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -23,14 +24,31 @@ public class UserController {
   UserService userService;
 
 
-  @PostMapping("/api/lessons/{uid}/topics")
+  @PostMapping("/register")
   public User createUser(
-          @PathVariable("uid") int userId,
-          @RequestBody User newUser
-  ) {
-    newUser.setId(userId);
-    return userService.createUser(newUser);
+          HttpSession session,
+          @RequestBody User newUser) {
+    User createdUser = userService.createUser(newUser);
+    createdUser.setPassword("*");
+    session.setAttribute("profile", createdUser);
+    return createdUser;
   }
+
+  @PostMapping("/login")
+  public User loginUser(
+          HttpSession session,
+          @RequestBody User user) {
+    User foundUser = userService.findUserByCredentials(user);
+    foundUser.setPassword("*");
+    session.setAttribute("profile", foundUser);
+    return foundUser;
+  }
+
+  @PostMapping("/logout")
+  public void logout(HttpSession session) {
+    session.invalidate();
+  }
+
   @GetMapping("/api/topics/{userId}")
   public User findUserById(
           @PathVariable("userId") Integer tid) {

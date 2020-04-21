@@ -10,13 +10,5 @@ import java.util.List;
 
 public interface UserRepository
         extends CrudRepository<User, Integer> {
-
-  @Query("SELECT user FROM User user")
-  public List<User> findAllTopics();
-
-
-  @Query("SELECT user FROM User user WHERE user.id=:id")
-  public User findUserById(
-          @Param("uid") Integer uid);
-
+  public User findUserByNameAndPassword(String name, String password);
 }

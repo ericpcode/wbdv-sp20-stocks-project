@@ -17,8 +17,13 @@ public class UserService {
   public User createUser(User newUser) {
     return userRepository.save(newUser);
   }
-  public User findUserById(Integer topicId){
-    return userRepository.findUserById(topicId);
+
+  public User findUserByCredentials(User user) {
+    return userRepository.findUserByNameAndPassword(user.getName(), user.getPassword());
+  }
+
+  public User findUserById(Integer userId){
+    return userRepository.findById(userId).get();
 
   }
 

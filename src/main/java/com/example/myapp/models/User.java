@@ -13,6 +13,7 @@ public class User {
   @GeneratedValue
   private Integer id;
   private String name;
+  private String password;
   // private Array[Stocks] portfolio;
 
   public Integer getId() {
@@ -29,5 +30,13 @@ public class User {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 }
