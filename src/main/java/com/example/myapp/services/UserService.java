@@ -30,9 +30,9 @@ public class UserService {
     return 1;
   }
 
-  public int deleteStock(User user, Stock stock) {
+  public int deleteStock(User user, String stockSymbol) {
     User savedUser = userRepository.findById(user.getId()).get();
-    savedUser.getStocks().removeIf(s -> stock.getSymbol().equals(s.getSymbol()));
+    savedUser.getStocks().removeIf(s -> stockSymbol.equals(s.getSymbol()));
     userRepository.save(savedUser);
     return 1;
   }

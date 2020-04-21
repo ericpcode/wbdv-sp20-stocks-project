@@ -1,6 +1,7 @@
 package com.example.myapp.controllers;
 
 
+import com.example.myapp.models.Stock;
 import com.example.myapp.models.User;
 import com.example.myapp.services.UserService;
 
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class UserController {
   @Autowired
   UserService userService;
@@ -30,7 +31,7 @@ public class UserController {
           @RequestBody User newUser) {
     User createdUser = userService.createUser(newUser);
     createdUser.setPassword("*");
-    session.setAttribute("profile", createdUser);
+    session.setAttribute("user", createdUser);
     return createdUser;
   }
 
@@ -40,13 +41,23 @@ public class UserController {
           @RequestBody User user) {
     User foundUser = userService.findUserByCredentials(user);
     foundUser.setPassword("*");
-    session.setAttribute("profile", foundUser);
+    session.setAttribute("user", foundUser);
     return foundUser;
   }
 
   @PostMapping("/logout")
   public void logout(HttpSession session) {
     session.invalidate();
+  }
+
+  @PostMapping("/stocks")
+  public int saveStock(HttpSession session, @RequestBody Stock stock) {
+    return userService.saveStock((User)session.getAttribute("user"), stock);
+  }
+
+  @DeleteMapping("/stocks/{stockSymbol}")
+  public int deleteStock(HttpSession session, @PathVariable("stockSymbol") String stockSymbol) {
+    return userService.deleteStock((User)session.getAttribute("user"), stockSymbol);
   }
 
   @GetMapping("/api/topics/{userId}")
