@@ -9,11 +9,12 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Stock {
     @Id
-    private String symbol;
+    private Integer id;
 
     @ManyToOne
     @JsonIgnore
     private User user;
+    private String symbol;
     private String name;
 
     public String getName() {
