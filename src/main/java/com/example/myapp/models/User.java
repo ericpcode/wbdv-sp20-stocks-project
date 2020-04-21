@@ -1,11 +1,11 @@
 package com.example.myapp.models;
 
 
-import java.lang.reflect.Array;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class User {
@@ -14,7 +14,8 @@ public class User {
   private Integer id;
   private String name;
   private String password;
-  // private Array[Stocks] portfolio;
+  @OneToMany(mappedBy = "user")
+  private List<Stock> stocks;
 
   public Integer getId() {
     return id;
@@ -38,5 +39,13 @@ public class User {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public List<Stock> getStocks() {
+    return stocks;
+  }
+
+  public void setStocks(List<Stock> stocks) {
+    this.stocks = stocks;
   }
 }
