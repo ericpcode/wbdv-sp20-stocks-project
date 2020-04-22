@@ -21,7 +21,7 @@ public class StockService {
   }
 
   public int deleteStock(User user, String symbol) {
-    stockRepository.removeByUserAndSymbol(user, symbol);
+    stockRepository.delete(stockRepository.findByUserAndSymbol(user, symbol));
     return 1;
   }
 }
