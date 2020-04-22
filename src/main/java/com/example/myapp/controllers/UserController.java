@@ -68,7 +68,7 @@ public class UserController {
   }
 
   @DeleteMapping("/api/topics/{topicId}")
-  public int deleteTopic(
+  public int deleteUser(
           @PathVariable("topicId") Integer uid) {
     return userService.deleteUser(uid);
   }
