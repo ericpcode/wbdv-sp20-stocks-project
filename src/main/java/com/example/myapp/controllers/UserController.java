@@ -3,6 +3,7 @@ package com.example.myapp.controllers;
 
 import com.example.myapp.models.Stock;
 import com.example.myapp.models.User;
+import com.example.myapp.services.StockService;
 import com.example.myapp.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import java.util.List;
 public class UserController {
   @Autowired
   UserService userService;
+  @Autowired
+  StockService stockService;
 
 
   @PostMapping("/register")
@@ -52,12 +55,12 @@ public class UserController {
 
   @PostMapping("/stocks")
   public int saveStock(HttpSession session, @RequestBody Stock stock) {
-    return userService.saveStock((User)session.getAttribute("user"), stock);
+    return stockService.saveStock((User)session.getAttribute("user"), stock);
   }
 
   @DeleteMapping("/stocks/{stockSymbol}")
   public int deleteStock(HttpSession session, @PathVariable("stockSymbol") String stockSymbol) {
-    return userService.deleteStock((User)session.getAttribute("user"), stockSymbol);
+    return stockService.deleteStock((User)session.getAttribute("user"), stockSymbol);
   }
 
   @GetMapping("/api/topics/{userId}")
