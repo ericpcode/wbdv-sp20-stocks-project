@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = "https://cs4550-sp20-stock-project.herokuapp.com/", allowCredentials = "true")
 public class UserController {
   @Autowired
   UserService userService;
