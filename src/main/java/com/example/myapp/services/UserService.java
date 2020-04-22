@@ -1,5 +1,6 @@
 package com.example.myapp.services;
 
+import com.example.myapp.models.Stock;
 import com.example.myapp.models.User;
 import com.example.myapp.repositories.UserRepository;
 
@@ -20,6 +21,20 @@ public class UserService {
 
   public User findUserByCredentials(User user) {
     return userRepository.findUserByNameAndPassword(user.getName(), user.getPassword());
+  }
+
+  public int saveStock(User user, Stock stock) {
+    User savedUser = userRepository.findById(user.getId()).get();
+    savedUser.getStocks().add(stock);
+    userRepository.save(savedUser);
+    return 1;
+  }
+
+  public int deleteStock(User user, String stockSymbol) {
+    User savedUser = userRepository.findById(user.getId()).get();
+    savedUser.getStocks().removeIf(s -> stockSymbol.equals(s.getSymbol()));
+    userRepository.save(savedUser);
+    return 1;
   }
 
   public User findUserById(Integer userId){
